@@ -1,0 +1,13 @@
+with open('config/urls.py', 'w') as f:
+    f.write('from django.contrib import admin\n')
+    f.write('from django.urls import path, include\n\n')
+    f.write('urlpatterns = [\n')
+    f.write('    path("admin/", admin.site.urls),\n')
+    f.write('    path("api/auth/", include("apps.accounts.urls")),\n')
+    f.write('    path("api/drugs/", include("apps.drugs.urls")),\n')
+    f.write('    path("api/verification/", include("apps.verification.urls")),\n')
+    f.write('    path("api/supply-chain/", include("apps.supply_chain.urls")),\n')
+    f.write('    path("api/alerts/", include("apps.alerts.urls")),\n')
+    f.write('    path("api/analytics/", include("apps.analytics.urls")),\n')
+    f.write(']\n')
+print('Done')

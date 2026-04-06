@@ -1,0 +1,12 @@
+with open('update_secret.py', 'w') as f:
+    f.write('import re\n')
+    f.write('with open("config/settings.py", "r") as f:\n')
+    f.write('    content = f.read()\n')
+    f.write('content = content.replace(\n')
+    f.write('    "SECRET_KEY = \'django-insecure-dev-key-only\'",\n')
+    f.write('    "SECRET_KEY = \'django-insecure-dev-key-only-for-development-use-only-change-in-prod\'"\n')
+    f.write(')\n')
+    f.write('with open("config/settings.py", "w") as f:\n')
+    f.write('    f.write(content)\n')
+    f.write('print("Done")\n')
+print('Done')

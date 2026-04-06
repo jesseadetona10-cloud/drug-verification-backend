@@ -1,0 +1,10 @@
+with open('apps/drugs/urls.py', 'w') as f:
+    f.write('from django.urls import path\n')
+    f.write('from .views import DrugListCreateView, DrugDetailView, BatchListCreateView, DrugVerifyView\n\n')
+    f.write('urlpatterns = [\n')
+    f.write('    path("", DrugListCreateView.as_view(), name="drug-list"),\n')
+    f.write('    path("<uuid:pk>/", DrugDetailView.as_view(), name="drug-detail"),\n')
+    f.write('    path("<uuid:drug_id>/batches/", BatchListCreateView.as_view(), name="batch-list"),\n')
+    f.write('    path("verify/<str:nafdac_number>/", DrugVerifyView.as_view(), name="drug-verify"),\n')
+    f.write(']\n')
+print('Done')

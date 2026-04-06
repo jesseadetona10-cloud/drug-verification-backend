@@ -1,0 +1,13 @@
+with open('apps/accounts/urls.py', 'w') as f:
+    f.write('from django.urls import path\n')
+    f.write('from rest_framework_simplejwt.views import TokenRefreshView\n')
+    f.write('from .views import RegisterView, LoginView, ProfileView, ChangePasswordView, UserListView\n\n')
+    f.write('urlpatterns = [\n')
+    f.write('    path("register/", RegisterView.as_view(), name="register"),\n')
+    f.write('    path("login/", LoginView.as_view(), name="login"),\n')
+    f.write('    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),\n')
+    f.write('    path("profile/", ProfileView.as_view(), name="profile"),\n')
+    f.write('    path("change-password/", ChangePasswordView.as_view(), name="change-password"),\n')
+    f.write('    path("users/", UserListView.as_view(), name="user-list"),\n')
+    f.write(']\n')
+print('Done')

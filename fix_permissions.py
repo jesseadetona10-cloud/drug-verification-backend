@@ -1,0 +1,12 @@
+with open('apps/common/permissions.py', 'w') as f:
+    f.write('from rest_framework import permissions\n\n')
+    f.write('class IsManufacturer(permissions.BasePermission):\n')
+    f.write('    def has_permission(self, request, view):\n')
+    f.write('        return request.user.is_authenticated and request.user.role == "manufacturer"\n\n')
+    f.write('class IsRegulator(permissions.BasePermission):\n')
+    f.write('    def has_permission(self, request, view):\n')
+    f.write('        return request.user.is_authenticated and request.user.role == "regulator"\n\n')
+    f.write('class IsPharmacist(permissions.BasePermission):\n')
+    f.write('    def has_permission(self, request, view):\n')
+    f.write('        return request.user.is_authenticated and request.user.role == "pharmacist"\n')
+print('Done')
