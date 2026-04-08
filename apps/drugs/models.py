@@ -1,7 +1,12 @@
 ﻿from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import RegexValidator
 import uuid
 
+nafdac_validator = RegexValidator(
+    regex=r"^[A-Z][0-9]-[0-9]{4}$",
+    message="NAFDAC number must follow format: A4-1234 (Letter + Number + dash + 4 digits)"
+)
 
 class Drug(models.Model):
     class Status(models.TextChoices):
@@ -16,11 +21,12 @@ class Drug(models.Model):
     name = models.CharField(max_length=255)
     generic_name = models.CharField(max_length=255, blank=True)
     manufacturer = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="drugs", limit_choices_to={"role": "manufacturer"})
-    nafdac_number = models.CharField(max_length=100, unique=True)
+    nafdac_number = models.CharField(max_length=100, unique=True, validators=[nafdac_validator])
     description = models.TextField(blank=True)
     dosage_form = models.CharField(max_length=100)
     strength = models.CharField(max_length=100)
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    image = models.ImageField(upload_to="drugs/images/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

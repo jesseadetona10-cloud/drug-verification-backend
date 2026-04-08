@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+﻿from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -22,6 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
+    dark_mode = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(null=True, blank=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
@@ -50,7 +51,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class ManufacturerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="manufacturer_profile")
-    registration_number = models.CharField(max_length=100, unique=True)
     address = models.TextField(blank=True)
 
     class Meta:

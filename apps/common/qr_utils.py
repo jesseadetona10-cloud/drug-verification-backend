@@ -1,4 +1,4 @@
-import qrcode
+﻿import qrcode
 import io
 import base64
 import json
@@ -9,7 +9,12 @@ import os
 def generate_batch_qr(batch_number, drug_id, manufacturer_id, secret_key=None):
     if secret_key is None:
         secret_key = os.environ.get("QR_SECRET_KEY", "dev-secret-key")
-    payload = {"b": batch_number, "d": str(drug_id), "m": str(manufacturer_id), "v": "1"}
+    payload = {
+        "b": batch_number,
+        "d": str(drug_id),
+        "m": str(manufacturer_id),
+        "v": "1"
+    }
     data_string = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     signature = hmac.new(secret_key.encode(), data_string.encode(), hashlib.sha256).hexdigest()[:16]
     payload["h"] = signature
@@ -35,6 +40,11 @@ def verify_qr_code(scanned_data, secret_key=None):
             expected_sig = hmac.new(secret_key.encode(), data_string.encode(), hashlib.sha256).hexdigest()[:16]
             if not hmac.compare_digest(data["h"], expected_sig):
                 return {"valid": False, "error": "Invalid signature"}
-        return {"valid": True, "batch_number": data.get("b"), "drug_id": data.get("d"), "manufacturer_id": data.get("m")}
+        return {
+            "valid": True,
+            "batch_number": data.get("b"),
+            "drug_id": data.get("d"),
+            "manufacturer_id": data.get("m")
+        }
     except Exception as e:
         return {"valid": False, "error": str(e)}
